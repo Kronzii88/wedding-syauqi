@@ -64,7 +64,7 @@ function StoryCard({ card, index }) {
         style={{
           position: "relative",
           width: "100%",
-          aspectRatio: "1 / 1",
+          aspectRatio: "3 / 5",
           overflow: "hidden",
           borderRadius: "12px",
           boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
@@ -358,7 +358,17 @@ const OurStory = () => {
             align-self: center !important;
             margin-left: 0 !important;
             margin-right: 0 !important;
-            max-width: 320px !important;
+            max-width: 280px !important;
+          }
+          .story-card .story-card__image-box,
+          .story-card > div {
+            aspect-ratio: 3 / 5 !important;
+          }
+        }
+
+        @media (min-width: 769px) {
+          .story-card > div {
+            aspect-ratio: 1 / 1 !important;
           }
         }
 
