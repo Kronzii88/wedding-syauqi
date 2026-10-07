@@ -14,13 +14,46 @@ const Preloader = ({ isOpened, onOpen }) => {
 
   const [guestName, setGuestName] = useState("Tamu Undangan");
   const [isDismissed, setIsDismissed] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const nameParam = params.get("to") || params.get("n") || params.get("nama");
-    if (nameParam) {
-      setGuestName(decodeURIComponent(nameParam));
-    }
+    const hashParam = params.get("to");
+
+    const verifyHash = async () => {
+      if (!hashParam) {
+        setGuestName("Tamu Undangan");
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        // Call Apps Script Web App to verify hash
+        const verifyUrl = process.env.NEXT_PUBLIC_GUEST_VERIFY_URL;
+        if (!verifyUrl) {
+          console.error("NEXT_PUBLIC_GUEST_VERIFY_URL not configured");
+          setGuestName("Tamu Undangan");
+          setIsLoading(false);
+          return;
+        }
+        const response = await fetch(
+          `${verifyUrl}?action=getGuestByHash&hash=${encodeURIComponent(hashParam)}`,
+        );
+        const data = await response.json();
+
+        if (data.success && data.name) {
+          setGuestName(data.name);
+        } else {
+          setGuestName("Tamu Undangan");
+        }
+      } catch (error) {
+        console.error("Error verifying hash:", error);
+        setGuestName("Tamu Undangan");
+      }
+      setIsLoading(false);
+    };
+
+    verifyHash();
   }, []);
 
   const { contextSafe } = useGSAP({ scope: stageRef });
@@ -166,6 +199,30 @@ const Preloader = ({ isOpened, onOpen }) => {
 
   if (isDismissed) {
     return null;
+  }
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          position: "fixed",
+          inset: 0,
+          width: "100%",
+          height: "100svh",
+          zIndex: 9999,
+          backgroundColor: "var(--brown)",
+          backgroundImage:
+            "radial-gradient(circle at 50% 40%, rgba(255,255,255,0.06), transparent 60%), linear-gradient(180deg, #460C18 0%, var(--brown-deep) 100%)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <span style={{ color: "var(--paper)", fontSize: "0.9rem" }}>
+          Memuat...
+        </span>
+      </div>
+    );
   }
 
   return (
