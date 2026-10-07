@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
+const VERIFY_URL = import.meta.env.VITE_PUBLIC_GUEST_VERIFY_URL;
+
 const Preloader = ({ isOpened, onOpen }) => {
   const stageRef = useRef(null);
   const envelopeSceneRef = useRef(null);
@@ -28,16 +30,8 @@ const Preloader = ({ isOpened, onOpen }) => {
       }
 
       try {
-        // Call Apps Script Web App to verify hash
-        const verifyUrl = process.env.NEXT_PUBLIC_GUEST_VERIFY_URL;
-        if (!verifyUrl) {
-          console.error("NEXT_PUBLIC_GUEST_VERIFY_URL not configured");
-          setGuestName("Tamu Undangan");
-          setIsLoading(false);
-          return;
-        }
         const response = await fetch(
-          `${verifyUrl}?action=getGuestByHash&hash=${encodeURIComponent(hashParam)}`,
+          `${VERIFY_URL}?action=getGuestByHash&hash=${encodeURIComponent(hashParam)}`,
         );
         const data = await response.json();
 
