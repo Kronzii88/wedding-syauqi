@@ -6,12 +6,16 @@ import { Send, CheckCircle2 } from "lucide-react";
 const sanitizeHTML = (str) => {
   if (!str) return "";
   return String(str)
-    .replace(/&/g, "&amp;")
+    .replace(/&/g, "")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#x27;")
-    .replace(/\//g, "&#x2F;");
+    .replace(/\//g, "&#x2F;")
+    .replace(/\n/g, "<br>")
+    .replace(/\t/g, "&nbsp;")
+    .replace(/\s+/g, " ")
+    .trim();
 };
 
 // Validate and sanitize name - only allow letters, numbers, spaces, and basic punctuation
@@ -48,10 +52,10 @@ const RSVPForm = () => {
 
   const [wishes, setWishes] = useState([
     {
-      name: "Ahmad &amp; Keluarga",
+      name: "Ahmad Keluarga",
       status: "Hadir",
       message:
-        "Selamat untuk Syauqi &amp; Siwi! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah. Aamiin.",
+        "Selamat untuk Syauqi dan Siwi! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah. Aamiin.",
     },
     {
       name: "Dinda Rahma",

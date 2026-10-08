@@ -54,9 +54,9 @@ const GiftSection = ({ showGift, onToggle }) => {
             lineHeight: 1.6,
           }}
         >
-          Doa restu Bapak/Ibu merupakan hadiah terindah bagi kami. Namun jika
-          Bapak/Ibu ingin memberikan tanda kasih secara digital, Bapak/Ibu dapat
-          menekan tombol di bawah ini.
+          Doa restu Bapak/Ibu merupakan hadiah terindah bagi kami. Namun, jika
+          berkenan memberikan tanda kasih secara digital, silakan klik tombol di
+          bawah ini.
         </p>
 
         {/* State-driven Toggle Button */}

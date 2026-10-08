@@ -293,8 +293,8 @@ const Preloader = ({ isOpened, onOpen }) => {
               marginBottom: "18px",
             }}
           >
-            Tanpa mengurangi rasa hormat, kami mengundang Anda untuk menghadiri
-            hari bahagia pernikahan kami.
+            Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu untuk
+            menghadiri hari bahagia pernikahan kami.
           </p>
           <button
             type="button"
